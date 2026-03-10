@@ -1,0 +1,38 @@
+# Databricks Asset Bundle - Genie Room Tutorial (Finance & Revenue)
+# Copy this file to databricks.yml and fill in your workspace host, profile, and root_path.
+# Do not commit databricks.yml (it is in .gitignore).
+# Deploy: databricks bundle deploy --target staging --profile YOUR_PROFILE
+
+bundle:
+  name: finance-revenue-genie-tutorial
+
+workspace:
+  host: https://YOUR_WORKSPACE.cloud.databricks.com
+  profile: YOUR_PROFILE
+
+variables:
+  environment:
+    description: "Environment (staging or dev)"
+    default: staging
+
+targets:
+  staging:
+    mode: development
+    default: true
+    variables:
+      environment: staging
+    workspace:
+      host: https://YOUR_WORKSPACE.cloud.databricks.com
+      profile: YOUR_PROFILE
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/staging
+
+resources:
+  jobs:
+    finance_revenue_genie_room_setup:
+      name: finance_revenue_genie_room_setup_${var.environment}
+      description: "Genie Room Tutorial - Finance & Revenue (deploy only; run manually)"
+      tasks:
+        - task_key: run_genie_setup
+          notebook_task:
+            notebook_path: ./One_Notebook_Genie_Room_Setup.py
+          timeout_seconds: 900
