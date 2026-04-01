@@ -6,3 +6,6 @@ __pycache__/
 *.log
 linkedin/
 databricks.yml
+
+# Local implementation planning (not versioned)
+plan/
